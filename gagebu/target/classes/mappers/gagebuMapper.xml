@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="gagebu">
+
+	<insert id="insertSpending" parameterType="com.gagebu.vo.GageVO">
+		<selectKey keyProperty="idx_num" resultType="int" order="BEFORE">
+			SELECT GAGEBU_SEQ.NEXTVAL FROM DUAL
+		</selectKey>
+			INSERT INTO GAGEBU(
+				WHENUSED
+				, CATE1
+				, PRICE
+				, CONTENT
+				, MEMO
+				, PLACE
+				, IDX_NUM
+				, CATE2
+			) VALUES (
+				#{whenUsed}
+				, #{cate1}
+				, #{price}
+				, #{content}
+				, #{memo}
+				, #{place}
+				, #{idx_num}
+				, #{cate2}
+			)
+	</insert>
+	
+	<select id="selectAllcommon" resultType="com.gagebu.vo.GageVO">
+		SELECT * FROM GAGEBU ORDER BY WHENUSED DESC
+	</select>
+
+	<select id="selectOne" parameterType="int" resultType="com.gagebu.vo.GageVO">
+		SELECT * FROM GAGEBU WHERE IDX_NUM = #{index}
+	</select>
+	
+	<delete id="deleteOne" parameterType="int">
+		DELETE FROM GAGEBU WHERE IDX_NUM = #{index}
+	</delete>
+	
+	<update id="update_whenUsed" parameterType="java.util.HashMap">
+		UPDATE GAGEBU
+		SET
+		WHENUSED = #{changed_value}
+		WHERE IDX_NUM = #{index_num}
+	</update>
+	
+		<update id="update_cate1" parameterType="java.util.HashMap">
+		UPDATE GAGEBU
+		SET
+		CATE1 = #{changed_value}
+		WHERE IDX_NUM = #{index_num}
+	</update>
+	
+	<update id="update_price" parameterType="java.util.HashMap">
+		UPDATE GAGEBU
+		SET
+		PRICE = #{changed_value}
+		WHERE IDX_NUM = #{index_num}
+	</update>
+
+	<update id="update_content" parameterType="java.util.HashMap">
+		UPDATE GAGEBU
+		SET
+		CONTENT = #{changed_value}
+		WHERE IDX_NUM = #{index_num}
+	</update>
+
+	<update id="update_memo" parameterType="java.util.HashMap">
+		UPDATE GAGEBU
+		SET
+		MEMO = #{changed_value}
+		WHERE IDX_NUM = #{index_num}
+	</update>
+	
+	<update id="update_place" parameterType="java.util.HashMap">
+		UPDATE GAGEBU
+		SET
+		PLACE = #{changed_value}
+		WHERE IDX_NUM = #{index_num}
+	</update>
+
+</mapper>
