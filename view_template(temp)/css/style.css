@@ -1,0 +1,90 @@
+* {
+  color: #000;
+  padding: 0;
+  margin: 0;
+  text-decoration: none;
+  box-sizing: border-box;
+}
+
+body {
+  background-color: #fff;
+}
+
+ul li {
+  list-style: none;
+}
+
+img {
+  vertical-align: middle;
+}
+
+.flex {
+  display: flex;
+}
+
+div#wrap div#controller_box {
+  width: 250px;
+  height: 100%;
+  padding: 10px;
+  border: 1px solid #000;
+  background-color: #fff;
+  position: fixed;
+}
+
+#controller_box div#createArea {
+  border: 1px solid #000;
+  padding: 10px;
+  font-size: 11px;
+}
+
+#createArea button#setPeriod {
+  width: 100%;
+  height: 30px;
+  margin-top: 10px;
+  text-align: center;
+  cursor: pointer;
+}
+
+#createArea p {
+  margin-bottom: 10px;
+  font-size: 15px;
+  font-weight: bold;
+}
+
+#createArea input {
+  display: block;
+  width: 100%;
+}
+
+#createArea label {
+  display: block;
+  padding: 5px 0px;
+}
+
+#wrap main#main {
+  margin-left: 300px;
+}
+
+#main table {
+  border-collapse: collapse;
+  margin-bottom: 50px;
+}
+
+table tr td {
+  width: 150px;
+  border: 1px solid #000;
+  padding: 5px 10px;
+  text-align: center;
+}
+
+table tr.rowContent td {
+  height: 100px;
+  font-size: 10px;
+  text-align: right;
+  vertical-align: top;
+}
+/* 
+table tr.budget,
+table tr.rowDay {
+  display: none;
+} */
