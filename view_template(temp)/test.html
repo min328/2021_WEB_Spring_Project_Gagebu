@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>test cal</title>
+    <style>
+        table {
+            padding: 10px;
+            border-collapse: collapse;
+        }
+
+        table tr td {
+            padding: 10px;
+            border: 1px solid #08f;
+        }
+    </style>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script>
+        $(function(){
+
+ /*         var now = new Date();
+            console.log(now);
+            var now_start = new Date(now.getFullYear(), now.getMonth(), 1);
+            console.log(now_start);
+            var now_end = new Date(now.getFullYear(), now.getMonth() + 1, 0);
+            console.log(now_end);
+
+            var now_tbl = document.getElementById("now_tbl");
+            var now_motnh = document.getElementById("now_month");
+            now_motnh.innerHTML = (now.getMonth() + 1) + '월 가계부';
+            
+            var now_row = null;
+            now_row = now_tbl.insertRow();
+            var cnt = 0;
+            var now_cell = null;
+            var day_next = new Date(now_start);
+            
+            for( i = 1; i <= now_end.getDate(); i++) {
+                now_cell = now_row.insertCell();
+                now_cell.innerHTML = i;
+                day_next = new Date(day_next.setDate(day_next.getDate() + + 1 ));
+                if(day_next.getDay() == '1'){
+                    now_row = now_tbl.insertRow();
+                }
+                console.log(day_next);
+            } 
+*/
+// 위의 코드를 쓰려고 했으나 월요일부터 일요일까지 잘랐을 때, 남는 주에 있어서
+// 전 달의 날짜나 다음 달의 날짜를 붙여야 하는 상황이 발생, 사용자 편의성이 떨어진다고 판단하였음.
+            var startDate = new Date($("#startDate").val()); //행 시작날짜
+            var endDate = new Date($("#endDate").val()); // 행 종료날짜
+            var total_period = cal_period(); // 전체 기간 일수
+            create_row(); // 날짜로 행 만들기
+
+            // 기간 설정 버튼
+            $("#setPeriod").click(function(){
+                startDate = new Date($("#startDate").val());
+                endDate = new Date($("#endDate").val());
+                console.log("시작일 변경됨 : " + startDate);
+                console.log("종료일 변경됨: " + endDate);
+                create_row();
+            });
+
+            
+            // 총 기간(일 수) 계산하기
+            function cal_period(){
+                var total_date = endDate.getDate() - startDate.getDate() + 1;
+                // 종료일이 시작일 보다 수가 항상 크기 때문에 endDate - startDate + 1 로 연산하였음
+                console.log("현재 총 기간 : " + total_date + "일");
+                return total_date;
+            } // cal_period() end
+            
+            // 입력된 날짜 기준으로 행 만들기
+            function create_row(){
+                // 날짜 집어넣기
+                var rowDate = document.getElementsByClassName('rowDate')[0];
+                var dateCell = rowDate.insertCell();
+                dateCell.innerHTML = startDate.getDate();
+
+                // 요일 집어넣기
+                var rowDay = document.getElementsByClassName('rowDay')[0];
+                var dayCell = rowDay.insertCell();
+                dayCell.innerHTML = startDate.getDay();
+                
+                total_period = cal_period();
+                for( i = 1; i < total_period; i++ ) {
+                    startDate = new Date(startDate.setDate(startDate.getDate() + 1 ));
+                    //console.log("그 다음 날 : " + dayafter);
+                    dateCell = rowDate.insertCell();
+                    dateCell.innerHTML = startDate.getDate();
+                    dayCell = rowDay.insertCell();
+                    dayCell.innerHTML = startDate.getDay();
+                }
+
+                // 예산 집어넣기 (시작 날 따로 빼지 않고 돌려야 해서, 위에 for문에 안 넣고 따로 돌림)
+                for( i = 0; i < total_period; i++) {
+                    var rowBudget = document.getElementsByClassName('budget')[0];
+                    var bgtCell = rowBudget.insertCell();
+                    var day = rowDay.getElementsByTagName("td")[i].innerHTML;
+                    
+                    // 요일이 토요일(6)이거나 일요일(0)이면 예산은 20000만원
+                    if( day == 6 || day == 1){
+                        bgtCell.innerHTML = 20000;
+                    } else {
+                        bgtCell.innerHTML = 10000;
+                    }
+                }
+
+
+
+
+                
+            } // create_row() end
+        
+        }); // js end
+
+
+    </script>
+</head>
+<body>
+<!--     <p id="now_month"></p>
+    <table id="now_tbl"></table> -->
+
+    <form action="">
+        start date : <input type="date" id="startDate" class="date_val" value="2021-08-09">
+        end date : <input type="date" id="endDate" class="date_val" value="2021-08-15">
+        <button type="button" id="setPeriod">설정</button>
+    </form>
+
+    <table id="cal_tbl">
+        <tr class="budget"></tr>
+        <tr class="rowDay"></tr>
+        <tr class="rowDate"></tr>
+        <tr class="rowContent"></tr>
+        <tr class="totalSpending"></tr>
+        <tr class="totalHalf"></tr>
+        <tr class="totalRest"></tr>
+    </table>
+</body>
+</html>
