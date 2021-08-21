@@ -113,11 +113,60 @@
                     // 남은 금액 칸 만들기 ( 예산 - 토탈 )
                     var totalRest = document.getElementsByClassName('totalRest')[cnt];
                     var restCell = totalRest.insertCell();
-                    restCell.innerHTML = bgtCell.innerHTML - totalCell.innerHTML;
+                    restCell.innerHTML = bgtCell.innerHTML - totalCell.innerHTML; 
                 }
-              
+
+                find_total(cnt);
+                find_halfTotal(cnt);
+                find_restTotal(cnt);
             } // create_row() end
+
+            function find_total(cnt) {
+                var total_arr = new Array();
+                var total_tr = document.getElementsByClassName('totalSpending')[cnt];
+                var total_td = $(total_tr).children();
+                var sum = 0;
+
+                total_td.each(function(i){
+                    sum += Number(total_td.eq(i).text());
+                });
+
+                console.log(sum);
+                var total_sum = total_tr.insertCell();
+                total_sum.innerHTML = sum;
+            }
+
+            function find_halfTotal(cnt) {
+                var total_arr = new Array();
+                var total_tr = document.getElementsByClassName('totalHalf')[cnt];
+                var total_td = $(total_tr).children();
+                var sum = 0;
+
+                total_td.each(function(i){
+                    sum += Number(total_td.eq(i).text());
+                });
+
+                console.log(sum);
+                var total_sum = total_tr.insertCell();
+                total_sum.innerHTML = sum;
+            }
+
+            function find_restTotal(cnt) {
+                var total_arr = new Array();
+                var total_tr = document.getElementsByClassName('totalRest')[cnt];
+                var total_td = $(total_tr).children();
+                var sum = 0;
+
+                total_td.each(function(i){
+                    sum += Number(total_td.eq(i).text());
+                });
+
+                console.log(sum);
+                var total_sum = total_tr.insertCell();
+                total_sum.innerHTML = sum;
+            }
         
+
         }); // js end
     </script>
 </head>
