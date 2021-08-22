@@ -27,6 +27,21 @@
 			)
 	</insert>
 	
+	<insert id="insertPeriod" parameterType="com.gagebu.vo.PeriodVO">
+		<selectKey keyProperty="idx_num" resultType="int" order="BEFORE">
+			SELECT PERIOD_SEQ.NEXTVAL FROM DUAL
+		</selectKey>
+			INSERT INTO GAGEBU_PERIOD(
+				STARTPOINT
+				, ENDPOINT
+				, IDX_NUM
+			) VALUES (
+				#{startPoint}
+				, #{endPoint}
+				, #{idx_num}
+			)
+	</insert>
+	
 	<select id="selectAllcommon" resultType="com.gagebu.vo.GageVO">
 		SELECT * FROM GAGEBU ORDER BY WHENUSED DESC
 	</select>
@@ -35,8 +50,16 @@
 		SELECT * FROM GAGEBU WHERE IDX_NUM = #{index}
 	</select>
 	
+	<select id="selectAllPeriod" resultType="com.gagebu.vo.PeriodVO">
+		SELECT * FROM GAGEBU_PERIOD ORDER BY IDX_NUM ASC
+	</select>
+	
 	<delete id="deleteOne" parameterType="int">
 		DELETE FROM GAGEBU WHERE IDX_NUM = #{index}
+	</delete>
+
+	<delete id="deletePeriod" parameterType="int">
+		DELETE FROM GAGEBU_PERIOD WHERE IDX_NUM = #{index}
 	</delete>
 	
 	<update id="update_whenUsed" parameterType="java.util.HashMap">

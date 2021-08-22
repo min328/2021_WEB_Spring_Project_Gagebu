@@ -1,16 +1,13 @@
 package com.gagebu.controller;
 
 
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -18,7 +15,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 
 import com.gagebu.service.GagebuService;
 import com.gagebu.vo.GageVO;
-import com.gagebu.vo.UpdateVO;
+import com.gagebu.vo.PeriodVO;
 
 @Controller
 public class GagebuController {
@@ -40,9 +37,17 @@ public class GagebuController {
 	
 	//2. 가계부 불러오기
 	@GetMapping("/howMuchSpent")
-	public String readSpendingOfFamily(Model model) throws Exception {
+	public String readSpendingList(Model model) throws Exception {
 		model.addAttribute("list", service.readGagebuAll());
 		return "spendingList";
+	}
+	
+	//2-1. 달력형 가계부 불러오기
+	@GetMapping("/howMuchSpentCalendar")
+	public String readSpendingCalendar(Model model) throws Exception {
+		// 입력된 기간 불러오기
+		model.addAttribute("period", service.readPeriodAll());
+		return "spendingCalendar";
 	}
 	
 	//3. 가계부 내역 삭제
@@ -54,6 +59,7 @@ public class GagebuController {
 		System.out.println("컨트롤러 끝");
 	}
 	
+	//4. 가계부 업데이트
 	@GetMapping("/updateThis")
 	public void updateListItem(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		
@@ -114,7 +120,28 @@ public class GagebuController {
 			
 		} else {
 			System.out.println("업데이트 중 오류가 발생하였습니다. 확인해주세요.");
-		}
-		
+		}	
 	}
+
+	// 달력형 가계부 기간정하기
+	@PostMapping("/setPeriod")
+	public String setWeekPeriod(HttpServletRequest request, HttpServletResponse response) throws Exception {
+		String start = request.getParameter("startDate");
+		String end = request.getParameter("endDate");
+		System.out.println("기간입력 진행중 : start = " + start + " end = " + end);
+		PeriodVO pvo = new PeriodVO();
+		pvo.setStartPoint(start);
+		pvo.setEndPoint(end);
+		service.addPeriod(pvo);
+		
+		return "redirect:/howMuchSpentCalendar";
+	}
+
+	// 달력형 가계부 기간 삭제하기
+	@GetMapping("/deletePeriod")
+	public void removePeriod(HttpServletRequest request, HttpServletResponse response) throws Exception {
+		int index = Integer.parseInt(request.getParameter("idx"));
+		service.getRidOfPeriod(index);
+	}
+	
 }

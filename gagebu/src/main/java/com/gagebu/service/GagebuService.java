@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import com.gagebu.dao.GagebuDAO;
 import com.gagebu.vo.GageVO;
+import com.gagebu.vo.PeriodVO;
 
 @Service
 public class GagebuService {
@@ -34,9 +35,23 @@ public class GagebuService {
 	public GageVO getOneList(int index) throws Exception {
 		return dao.selectOne(index);
 	}
-	
 	public void changeItem(Map<String, Object> map) throws Exception {
 		dao.updateOne(map);		
+	}
+
+	// 달력형 가계부 기간정하기
+	public void addPeriod(PeriodVO pvo) throws Exception {
+		dao.insertPeriod(pvo);
+	}
+	
+	// 달력형 가계부 기간 불러오기
+	public List<PeriodVO> readPeriodAll() throws Exception {
+		return dao.selectAllPeriod();
+	}
+
+	// 달력형 가계부 기간 삭제하기
+	public void getRidOfPeriod(int index) throws Exception {
+		dao.deletePeriod(index);
 	}
 
 }

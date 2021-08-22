@@ -26,6 +26,7 @@ $(function(){
 				, data: { "idx" : idx }
 				, success : function(){
 					console.log("정상적으로 컨트롤러를 작동했습니다.");
+					window.location = location;
 				}
 				, error: function(){
 					console.log("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);

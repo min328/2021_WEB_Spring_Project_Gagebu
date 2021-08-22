@@ -9,6 +9,7 @@ import org.apache.ibatis.session.SqlSession;
 import org.springframework.stereotype.Repository;
 
 import com.gagebu.vo.GageVO;
+import com.gagebu.vo.PeriodVO;
 
 @Repository
 public class GagebuDAO {
@@ -38,7 +39,6 @@ public class GagebuDAO {
 		System.out.println("업데이트할 대상 : " + index + "번");
 		return sql.selectOne("gagebu.selectOne", index);
 	}
-
 	public void updateOne(Map<String, Object> map) throws Exception {
 		
 		String column = (String) map.get("column_name");
@@ -59,6 +59,21 @@ public class GagebuDAO {
 						break;
 		}
 		
+	}
+
+	// 달력형 가계부 기간정하기
+	public void insertPeriod(PeriodVO pvo) throws Exception {
+		sql.insert("gagebu.insertPeriod", pvo);
+	}
+
+	// 달력형 가계부 기간 불러오기
+	public List<PeriodVO> selectAllPeriod() throws Exception {
+		return sql.selectList("gagebu.selectAllPeriod");
+	}
+	
+	// 달력형 가계부 기간 삭제하기
+	public void deletePeriod(int index) throws Exception {
+		sql.delete("gagebu.deletePeriod", index);
 	}
 	
 
